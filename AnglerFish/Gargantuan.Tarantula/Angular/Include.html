@@ -9,17 +9,24 @@
     
     <div ng-app="myApp" ng-controller="customersCtrl">
         <div ng-include="'myText.html'"></div>
-        <div ng-include="'myTable.html'"></div>
+        <!--<div ng-include="'myTable.html'"></div>-->
+        <div ng-include="this.site"></div>
     </div>
 
     <script>
         var app = angular.module('myApp', []);
         app.controller('customersCtrl', function ($scope, $http) {
+            
             $http.get("/Api/Customers/Customers").then(function (response) {
                 $scope.names = response.data;
+                $scope.Hide = false; //Used in myText.html to display or hide button.
+                $scope.site = ""; //Url of the html file to display.
                 $scope.Title = "[Title Goes Here]";
                 $scope.on_click = function (e) {
-                    alert("Hello World!");
+
+                    $scope.site = "myTable.html";
+                    $scope.Title = "Hello World!";
+                    $scope.Hide = true;
                 };
             });
         });
