@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="/Scripts/angular.min.js"></script>
+    <script src="/Scripts/angular-route.min.js"></script>
+</head>
+<body ng-app="myApp">
+    <a href="#!myTable">Show Table</a>
+    <a href="#!myText">Show Text</a>
+    <a href="#!myTableText">Show All</a>
+    <div ng-view></div>
+    <script>     
+        var OnClick = function (e, scope) {
+
+            scope.site = "myTable.html";
+            scope.Title = "Hello World!";
+            scope.Hide = true;
+        }
+
+
+        var app = angular.module("myApp", ["ngRoute"]);
+        app.config(function ($routeProvider) {
+            $routeProvider.when("/myTable", {
+                templateUrl: "myTable.html",
+                controller: "myTableController"
+            })
+                .when("/myText", {
+                    templateUrl: "myText.html",
+                    controller: "myTextController"
+                })
+                .when("/myTableText", {
+                    templateUrl: "myTableText.html",
+                    controller: "myTableTextController"
+                });
+        });
+
+        app.controller("myTableController", function ($scope,$http) {
+            $http.get("/Api/Customers/Customers").then(function (response) {
+                $scope.names = response.data;
+            })
+        });
+
+        app.controller("myTextController", function($scope){
+            $scope.Hide = false;
+            $scope.Title = "[Title Goes Here]";
+            $scope.on_click = OnClick;
+        });
+
+        app.controller('myTableTextController', function ($scope, $http) {
+
+            $http.get("/Api/Customers/Customers").then(function (response) {
+                $scope.names = response.data;
+                $scope.Hide = false; //Used in myText.html to display or hide button.
+                $scope.site = ""; //Url of the html file to display.
+                $scope.Title = "[Title Goes Here]";
+                $scope.on_click = OnClick;
+            });
+        });
+    </script>
+</body>
+</html>
