@@ -161,6 +161,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Angular\DynamicInclude.html" />
     <Content Include="Angular\myTableText.html" />
     <Content Include="Angular\myText.html" />
     <Content Include="Angular\Route.html" />

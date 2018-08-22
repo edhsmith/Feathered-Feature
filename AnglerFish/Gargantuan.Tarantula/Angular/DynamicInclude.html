@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="/Scripts/angular.min.js"></script>
+</head>
+<body>
+
+    <div ng-app="myApp" ng-controller="customersCtrl">
+        <button ng-click="buttonClick($event)">Toggle</button>
+        <div ng-include="this.site"></div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('customersCtrl', function ($scope, $http) {
+
+
+            $scope.site = "myText.html";
+            $scope.buttonClick = function (e) {
+                if ($scope.site == "myText.html") {
+                    $scope.site = "myTable.html";
+                    $http.get("/Api/Customers/Customers").then(function (response) {
+                        $scope.names = response.data;
+                    });
+                }
+                else {
+                    $scope.site = "myText.html";
+
+                    $scope.Title = "[Title Goes Here]";
+                    $scope.on_click = function (e) {
+
+                        //$scope.site = "myTable.html";
+                        //$scope.Title = "Hello World!";
+                        //$scope.Hide = true;
+                    };
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
