@@ -1,0 +1,2 @@
+Refer to https://www.codeguru.com/csharp/.net/net_general/creating-a-visual-basic.net-app-that-communicates-with-your-webcam.html .
+Converted from VB.Net codes.
